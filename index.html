@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Laboratorio Secreto — Juan Martín, Ingeniero de Redstone</title>
+  <meta name="description" content="El progreso de Juan Martín en su aventura de electrónica y Redstone." />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div class="envoltorio">
+    <header class="hero">
+      <p class="hero-kicker">Archivo confidencial · Ingeniero de Redstone</p>
+      <h1>El Laboratorio Secreto</h1>
+      <p>
+        Aquí vive todo lo que Juan Martín ha descubierto en el laboratorio: sus
+        misiones superadas, sus insignias y las puertas que ya puede abrir.
+        Nada se desbloquea solo — cada avance lo confirma el supervisor
+        después de comprobar el experimento en la vida real.
+      </p>
+    </header>
+
+    <section id="cabecera-xp" aria-label="Progreso de experiencia"></section>
+
+    <h2 class="seccion-titulo">Vitrina de insignias</h2>
+    <section id="insignias" aria-label="Insignias obtenidas"></section>
+
+    <h2 class="seccion-titulo">Mapa del laboratorio</h2>
+    <section id="mapa-misiones" aria-label="Misiones"></section>
+
+    <h2 class="seccion-titulo">Muy al final...</h2>
+    <section id="final-preview" aria-label="Vista previa de la misión final"></section>
+
+    <div class="pie-acciones">
+      <button id="btn-recargar" type="button">Actualizar laboratorio</button>
+      <p class="pie-nota">
+        ¿El supervisor acaba de aprobar una misión? Toca este botón para
+        volver a leer el registro.
+      </p>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="assets/js/missions.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

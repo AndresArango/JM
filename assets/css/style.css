@@ -1,0 +1,291 @@
+/* ==========================================================================
+   EL LABORATORIO SECRETO — estilos
+   Paleta inspirada en piedra de cueva + redstone + cobre de circuito,
+   no en plantillas genéricas de dashboard.
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Baloo+2:wght@500;600;800&display=swap");
+
+:root {
+  --piedra-fondo: #131c16;
+  --piedra-panel: #1d2b21;
+  --piedra-panel-alta: #26382c;
+  --linea: #3a4d3d;
+  --redstone: #e4572e;
+  --redstone-brillo: #ff7a48;
+  --cobre: #c9a15a;
+  --musgo: #7fb069;
+  --oled: #59d9c4;
+  --hueso: #edece3;
+  --hueso-tenue: #a9b8ac;
+
+  --fuente-titulo: "Press Start 2P", monospace;
+  --fuente-cuerpo: "Baloo 2", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--piedra-fondo);
+  background-image: radial-gradient(circle at 20% 0%, #1a2a1f 0%, var(--piedra-fondo) 55%);
+  color: var(--hueso);
+  font-family: var(--fuente-cuerpo);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--oled);
+}
+
+.envoltorio {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 28px 20px 80px;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  text-align: left;
+  padding: 22px 24px;
+  border: 3px solid var(--cobre);
+  background: linear-gradient(180deg, var(--piedra-panel-alta), var(--piedra-panel));
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.4);
+  margin-bottom: 22px;
+}
+
+.hero-kicker {
+  font-family: var(--fuente-titulo);
+  font-size: 10px;
+  color: var(--redstone-brillo);
+  letter-spacing: 1px;
+  margin: 0 0 14px;
+}
+
+.hero h1 {
+  font-family: var(--fuente-titulo);
+  font-size: clamp(22px, 4.2vw, 34px);
+  line-height: 1.5;
+  margin: 0 0 12px;
+  color: var(--hueso);
+  text-shadow: 3px 3px 0 var(--redstone);
+}
+
+.hero p {
+  max-width: 60ch;
+  color: var(--hueso-tenue);
+  margin: 0;
+}
+
+/* ---------- Cabecera de XP ---------- */
+
+#cabecera-xp {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.xp-bloque {
+  border: 3px solid var(--linea);
+  background: var(--piedra-panel);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.xp-valor {
+  font-family: var(--fuente-titulo);
+  font-size: 22px;
+  color: var(--oled);
+}
+
+.xp-etiqueta {
+  color: var(--hueso-tenue);
+  font-size: 14px;
+}
+
+/* ---------- Vitrina de insignias ---------- */
+
+.seccion-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: 13px;
+  color: var(--cobre);
+  margin: 30px 0 14px;
+}
+
+#insignias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.insignia {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 2px solid var(--cobre);
+  background: var(--piedra-panel);
+  padding: 8px 14px;
+  border-radius: 999px;
+}
+
+.insignia-icono {
+  filter: drop-shadow(0 0 4px var(--redstone));
+}
+
+.insignias-vacio {
+  color: var(--hueso-tenue);
+  font-style: italic;
+}
+
+/* ---------- Mapa de misiones ---------- */
+
+#mapa-misiones,
+#final-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+#final-preview {
+  grid-template-columns: 1fr;
+  margin-top: 6px;
+}
+
+.mision {
+  border: 3px solid var(--linea);
+  background: var(--piedra-panel);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mision-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--fuente-titulo);
+  font-size: 10px;
+  color: var(--hueso-tenue);
+}
+
+.mision-nombre {
+  margin: 0;
+  font-size: 19px;
+  color: var(--hueso);
+}
+
+.mision-estado-texto {
+  margin: 0;
+  font-weight: 600;
+}
+
+.mision-detalle,
+.mision-objetivo,
+.mision-pregunta,
+.mision-equipo,
+.mision-recompensa {
+  margin: 0;
+  color: var(--hueso-tenue);
+  font-size: 15px;
+}
+
+.mision-recompensa {
+  color: var(--cobre);
+}
+
+/* Completada: borde musgo, sensación de "conquistado" */
+.mision--completada {
+  border-color: var(--musgo);
+  box-shadow: 4px 4px 0 rgba(127, 176, 105, 0.25);
+}
+.mision--completada .mision-estado-texto {
+  color: var(--musgo);
+}
+
+/* Disponible: brillo redstone, invita a jugar */
+.mision--disponible {
+  border-color: var(--redstone);
+  box-shadow: 0 0 0 3px rgba(228, 87, 46, 0.15), 5px 5px 0 rgba(228, 87, 46, 0.3);
+}
+.mision--disponible .mision-estado-texto {
+  color: var(--redstone-brillo);
+}
+
+/* Bloqueada: apagada, sin datos jugosos */
+.mision--bloqueada {
+  opacity: 0.55;
+}
+.mision--bloqueada .mision-nombre {
+  color: var(--hueso-tenue);
+}
+
+.mision--omitida {
+  opacity: 0.4;
+  border-style: dashed;
+}
+
+.mision--final {
+  border-color: var(--oled);
+  background: linear-gradient(180deg, var(--piedra-panel-alta), var(--piedra-panel));
+}
+.mision--final .mision-nombre {
+  color: var(--oled);
+}
+
+/* ---------- Pie / acciones ---------- */
+
+.pie-acciones {
+  margin-top: 34px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+#btn-recargar {
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--piedra-fondo);
+  background: var(--oled);
+  border: 3px solid var(--piedra-fondo);
+  padding: 10px 18px;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.4);
+}
+
+#btn-recargar:hover {
+  background: var(--hueso);
+}
+
+#btn-recargar:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--redstone-brillo);
+  outline-offset: 2px;
+}
+
+.pie-nota {
+  color: var(--hueso-tenue);
+  font-size: 13px;
+}
+
+.estado-error {
+  border: 3px dashed var(--redstone);
+  padding: 16px;
+  color: var(--redstone-brillo);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+}
