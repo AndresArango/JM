@@ -57,11 +57,28 @@ si ya se jugó o no.
    - `["02"]` → exige la misión 02 completada
    - `[{ anyOf: ["06","07"] }]` → exige 06 **o** 07 (para bifurcaciones)
 
-Por ahora solo están armadas las misiones **01, 02, 06 y 07** como
-demostración del motor, más una vista previa bloqueada de la **misión
-final (40)**. El resto del contenido narrativo de las 40 misiones (ya
-tienes el mapa completo en la Guía del Arquitecto) se va agregando de a
-poco siguiendo el mismo patrón.
+Las 47 misiones ya están todas en `missions.js` con su fase, tipo, costo
+y recompensa de XP — pero solo **01, 02, 06 y 07** tienen la aventura
+completa escrita (historia, objetivo, equipo, etc.). El resto muestra un
+texto de "contenido en preparación" mientras se van escribiendo, fase por
+fase, en `guia/GUIA_SUPERVISOR.md` (el paso a paso técnico para ti) y en
+`missions.js` (la aventura para Juan Martín).
+
+### Tipos de requisito que soporta el motor
+
+- `"05"` → exige la misión 05 completada.
+- `{ anyOf: ["06","07"] }` → exige 06 **o** 07 (bifurcación).
+- `{ countAtLeast: 2, ids: [...] }` → exige al menos 2 completadas de esa lista.
+- `{ canjeTipo: "cualquiera" }` → exige al menos un canje registrado (o de un tipo específico: `"Bloques"`, `"Componente"`, `"Nivel"`, `"Premio"`).
+
+### Mapa de recorrido
+
+`assets/js/map.js` dibuja el camino tipo tablero de juego a partir de la
+misma estructura de `missions.js` — no hay que mantenerlo aparte. Las
+misiones principales, retos, especiales y rutas forman el sendero
+central; los bonus y la misión secreta aparecen como cofres a los lados,
+conectados a la misión de la que dependen. Se actualiza solo con cada
+`estado.xlsx` nuevo.
 
 ## Publicar en Cloudflare Pages (nueva URL, mismo repositorio)
 

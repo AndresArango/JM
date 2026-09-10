@@ -233,12 +233,89 @@ a {
   border-style: dashed;
 }
 
-.mision--final {
-  border-color: var(--oled);
-  background: linear-gradient(180deg, var(--piedra-panel-alta), var(--piedra-panel));
+/* Acentos por tipo (independientes del estado) */
+.mision--tipo-Bonus .mision-id,
+.mision--tipo-Secreta .mision-id {
+  color: var(--cobre);
 }
-.mision--final .mision-nombre {
+.mision--tipo-Especial .mision-id {
   color: var(--oled);
+}
+.mision--tipo-Final-secreto,
+.mision--tipo-Final {
+  border-color: var(--oled);
+}
+.mision--tipo-Final-secreto .mision-nombre,
+.mision--tipo-Final .mision-nombre {
+  color: var(--oled);
+}
+
+.seccion-nota {
+  color: var(--hueso-tenue);
+  font-size: 14px;
+  margin: -6px 0 14px;
+}
+
+/* ---------- Mapa de recorrido ---------- */
+
+.mapa-recorrido-scroll {
+  border: 3px solid var(--cobre);
+  background: var(--piedra-panel);
+  max-height: 520px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 10px 0;
+}
+
+.mapa-recorrido-scroll svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mapa-caminos line {
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+.camino-recorrido {
+  stroke: var(--musgo);
+}
+.camino-siguiente {
+  stroke: var(--redstone-brillo);
+  stroke-dasharray: 2 6;
+}
+.camino-pendiente {
+  stroke: var(--linea);
+  stroke-dasharray: 2 6;
+}
+.camino-omitido {
+  stroke: var(--hueso-tenue);
+  stroke-dasharray: 1 5;
+  opacity: 0.5;
+}
+.camino-satelite {
+  stroke: var(--cobre);
+  stroke-width: 2;
+  stroke-dasharray: 3 4;
+  opacity: 0.7;
+}
+
+.nodo-mapa-texto {
+  font-family: var(--fuente-titulo);
+  font-size: 9px;
+  fill: var(--piedra-fondo);
+}
+.nodo-mapa--bloqueada .nodo-mapa-texto {
+  fill: var(--hueso-tenue);
+}
+.nodo-mapa-icono {
+  font-size: 12px;
+}
+.nodo-mapa--disponible circle {
+  filter: drop-shadow(0 0 5px var(--redstone));
+}
+.nodo-mapa--completada circle {
+  filter: drop-shadow(0 0 4px var(--musgo));
 }
 
 /* ---------- Pie / acciones ---------- */

@@ -25,11 +25,17 @@
     <h2 class="seccion-titulo">Vitrina de insignias</h2>
     <section id="insignias" aria-label="Insignias obtenidas"></section>
 
-    <h2 class="seccion-titulo">Mapa del laboratorio</h2>
-    <section id="mapa-misiones" aria-label="Misiones"></section>
+    <h2 class="seccion-titulo">Mapa de recorrido</h2>
+    <p class="seccion-nota">
+      Toca cualquier punto del camino para ver esa misión más abajo. Los
+      cofres son misiones bonus o secretas.
+    </p>
+    <div id="mapa-recorrido-scroll" class="mapa-recorrido-scroll">
+      <div id="mapa-recorrido-svg"></div>
+    </div>
 
-    <h2 class="seccion-titulo">Muy al final...</h2>
-    <section id="final-preview" aria-label="Vista previa de la misión final"></section>
+    <h2 class="seccion-titulo">Todas las misiones</h2>
+    <section id="mapa-misiones" aria-label="Misiones"></section>
 
     <div class="pie-acciones">
       <button id="btn-recargar" type="button">Actualizar laboratorio</button>
@@ -42,6 +48,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="assets/js/missions.js"></script>
+  <script src="assets/js/map.js"></script>
   <script src="assets/js/app.js"></script>
 </body>
 </html>
