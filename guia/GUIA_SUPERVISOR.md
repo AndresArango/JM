@@ -93,6 +93,59 @@ salidas como LEDs.
 
 ---
 
-*Las fases 2 a 5 se agregan en el mismo formato a medida que las vayamos
+## FASE 2 — CONSTRUCTOR (misiones 11 a 19)
+
+### 11 · El semáforo secreto
+**Elementos exactos:** 3 LED (rojo, amarillo, verde) · 3 resistencias 220Ω.
+**Paso a paso:**
+1. Monta los 3 LEDs como en la misión 05, cada uno en su propio pin GPIO (reutiliza los mismos de esa misión si ya los tienes anotados).
+2. Programa una secuencia: rojo encendido X segundos → apaga rojo, enciende amarillo Y segundos → apaga amarillo, enciende verde Z segundos → repetir.
+3. Deja que Juan Martín decida los tiempos de cada color.
+
+### 12 · El botón maestro
+**Elementos:** 1 botón pulsador · el semáforo de la misión 11.
+**Paso a paso:** conecta el botón con `INPUT_PULLUP`. En vez de avanzar la secuencia sola con `delay()`, que solo avance al detectar una pulsación nueva (cuidado con "rebotes" del botón — si salta más de un paso por clic, es normal, no hay que sobre-explicarlo, es un buen tema para la Fase 4).
+
+### 13 · El potenciómetro mágico
+**Elementos:** 1 potenciómetro 10k.
+**Paso a paso:**
+1. Conecta las 2 patas externas del potenciómetro a 3.3V y GND, y la pata central a un pin GPIO con entrada analógica (anótalo: ____).
+2. Lee el valor con el código y muéstralo (por ejemplo, en el monitor serie) para que Juan Martín vea los números cambiar al girar la perilla.
+3. Traduce ese valor a algo visible: por ejemplo, cuántos de los 3 LEDs de la misión 11 están encendidos.
+
+### 14 · Controla la intensidad
+**Elementos:** el potenciómetro de la misión 13 + 1 LED nuevo + resistencia 220Ω.
+**Paso a paso:** usa el valor leído del potenciómetro para controlar la salida PWM de un LED (brillo variable), en vez de solo contar LEDs encendidos.
+
+### 15 · La alarma del laboratorio
+**Elementos:** 1 botón · 1 LED · 1 buzzer pasivo.
+**Paso a paso:**
+1. Conecta el buzzer pasivo a un pin PWM (anótalo: ____).
+2. Al presionar el botón: enciende el LED y reproduce un tono con el buzzer al mismo tiempo.
+3. Al soltar: apaga ambos.
+
+### 16 · El sonido que avisa
+**Elementos:** 1 buzzer activo (distinto al pasivo de la misión 15).
+**Paso a paso:** conéctalo a un pin digital simple (no necesita PWM, solo HIGH/LOW). Programa un patrón de pitidos (ej. 3 cortos + 1 largo) y compara con Juan Martín cómo suena distinto al buzzer pasivo.
+
+### 17 · El relé misterioso
+**Elementos:** 1 módulo relé de 1 canal (5V).
+**Nota de seguridad:** el relé solo controla, del lado de carga, un circuito de bajo voltaje que tú hayas verificado antes (por ejemplo una tira de LEDs de 5V, nunca algo conectado a la red eléctrica).
+**Paso a paso:**
+1. Conecta el pin de señal del relé a un GPIO digital (anótalo: ____), y su alimentación según indique tu módulo (normalmente 5V y GND).
+2. Prueba primero SIN nada conectado a la salida del relé — solo para escuchar el clic y confirmar que el código lo activa.
+3. Solo entonces conecta el circuito externo de baja tensión que ya verificaste.
+
+### 18 · El código de colores (Bonus)
+**Elementos:** resistencias variadas.
+**Paso a paso:** repaso rápido, similar a la misión 09 pero con resistencias distintas — puedes usarlo como recordatorio antes de la Fase 3.
+
+### 19 · La feria de luces
+**Elementos:** todos los componentes usados en la Fase 2.
+**Paso a paso:** deja que Juan Martín elija libremente al menos 3 componentes (LED, botón, potenciómetro, buzzer, relé) y arme algo propio. Tu rol aquí es de espectador, no de guía — anota qué eligió y por qué, para la próxima conversación.
+
+---
+
+*Las fases 3 a 5 se agregan en el mismo formato a medida que las vayamos
 cerrando en la conversación — dímelo cuando quieras que siga con la
-Fase 2.*
+Fase 3.*
