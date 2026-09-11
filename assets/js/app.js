@@ -19,9 +19,9 @@ async function cargarEstado() {
   const canjesSheet = wb.Sheets["Canjes"];
   if (!misionesSheet) throw new Error('El Excel no tiene una hoja llamada "Misiones"');
 
-  const misionesRows = XLSX.utils.sheet_to_json(misionesSheet, { defval: "" });
+  const misionesRows = XLSX.utils.sheet_to_json(misionesSheet, { defval: "", range: 4 });
   const canjesRows = canjesSheet
-    ? XLSX.utils.sheet_to_json(canjesSheet, { defval: "" })
+    ? XLSX.utils.sheet_to_json(canjesSheet, { defval: "", range: 4 })
     : [];
 
   const estadoPorId = {};
