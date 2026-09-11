@@ -94,6 +94,8 @@ function construirSVG(estadoPorId, canjes) {
         if (estadoPrev === "completada" && estadoNext === "completada") clase = "camino-recorrido";
         else if (estadoPrev === "completada" && estadoNext === "disponible") clase = "camino-siguiente";
         else if (estadoPrev === "omitida" || estadoNext === "omitida") clase = "camino-omitido";
+        // pista de cobre: una línea base (aislante oscuro) + una más fina encima (el cobre)
+        lineas += `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" class="camino-base" />`;
         lineas += `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" class="${clase}" />`;
       });
     });
@@ -103,6 +105,7 @@ function construirSVG(estadoPorId, canjes) {
   satelites.forEach((s) => {
     const p = pos[s.mision.id];
     if (!p || !p.ancla) return;
+    conectoresSatelite += `<line x1="${p.ancla.x}" y1="${p.ancla.y}" x2="${p.x}" y2="${p.y}" class="camino-satelite-base" />`;
     conectoresSatelite += `<line x1="${p.ancla.x}" y1="${p.ancla.y}" x2="${p.x}" y2="${p.y}" class="camino-satelite" />`;
   });
 
@@ -117,6 +120,7 @@ function construirSVG(estadoPorId, canjes) {
       nodosPrincipales += `
         <g class="nodo-mapa nodo-mapa--${estadoVisual}" data-mid="${m.id}" transform="translate(${p.x},${p.y})">
           <title>#${m.id} · ${estadoVisual === "bloqueada" ? "Bloqueada" : m.nombre}</title>
+          <rect x="-11" y="-11" width="22" height="22" rx="2" class="nodo-pad" />
           <circle r="${MAPA_CONFIG.nodeR}" fill="${relleno}" stroke="${color}" stroke-width="3" />
           <text text-anchor="middle" dy="4" class="nodo-mapa-texto">${etiqueta}</text>
         </g>`;
@@ -130,17 +134,42 @@ function construirSVG(estadoPorId, canjes) {
     const estadoVisual = estadoVisualDeMision(estadoPorId, canjes, s.mision);
     const color = colorPorEstado(estadoVisual);
     const relleno = estadoVisual === "bloqueada" ? "var(--piedra-panel)" : "var(--cobre)";
-    const icono = s.mision.tipo === "Secreta" ? "🗝" : "🎁";
     nodosSatelite += `
-      <g class="nodo-mapa nodo-mapa--satelite nodo-mapa--${estadoVisual}" data-mid="${s.mision.id}" transform="translate(${p.x},${p.y}) rotate(45)">
+      <g class="nodo-mapa nodo-mapa--cofre nodo-mapa--${estadoVisual}" data-mid="${s.mision.id}" transform="translate(${p.x},${p.y})">
         <title>${s.mision.tipo} · ${estadoVisual === "bloqueada" ? "Bloqueada" : s.mision.nombre}</title>
-        <rect x="-11" y="-11" width="22" height="22" fill="${relleno}" stroke="${color}" stroke-width="3" />
-      </g>
-      <text x="${p.x}" y="${p.y + 4}" text-anchor="middle" class="nodo-mapa-icono" style="pointer-events:none">${estadoVisual === "bloqueada" ? "" : icono}</text>`;
+        <rect x="-10" y="-6" width="20" height="14" rx="1" fill="${relleno}" stroke="${color}" stroke-width="2" />
+        <rect x="-10" y="-10" width="20" height="6" rx="1" fill="${relleno}" stroke="${color}" stroke-width="2" />
+        <circle cx="0" cy="1" r="1.6" fill="${color}" />
+      </g>`;
   });
+
+  const patron = `
+    <defs>
+      <pattern id="pxBlocks" width="40" height="40" patternUnits="userSpaceOnUse">
+        <rect width="40" height="40" fill="var(--piedra-panel)" />
+        <rect x="0" y="0" width="10" height="10" fill="var(--piedra-panel-alta)" stroke="var(--piedra-fondo)" stroke-width="0.5" />
+        <rect x="10" y="0" width="10" height="10" fill="var(--piedra-panel)" stroke="var(--piedra-fondo)" stroke-width="0.5" />
+        <rect x="20" y="0" width="10" height="10" fill="var(--piedra-panel-alta)" stroke="var(--piedra-fondo)" stroke-width="0.5" />
+        <rect x="30" y="0" width="10" height="10" fill="var(--musgo)" opacity="0.18" stroke="var(--piedra-fondo)" stroke-width="0.5" />
+        <rect x="0" y="10" width="10" height="10" fill="var(--piedra-panel)" stroke="var(--piedra-fondo)" stroke-width="0.5" />
+        <rect x="10" y="10" width="10" height="10" fill="var(--piedra-panel-alta)" stroke="var(--piedra-fondo)" stroke-width="0.5" />
+        <rect x="20" y="10" width="10" height="10" fill="var(--piedra-panel)" stroke="var(--piedra-fondo)" stroke-width="0.5" />
+        <rect x="30" y="10" width="10" height="10" fill="var(--piedra-panel-alta)" stroke="var(--piedra-fondo)" stroke-width="0.5" />
+        <rect x="0" y="20" width="10" height="10" fill="var(--piedra-panel-alta)" stroke="var(--piedra-fondo)" stroke-width="0.5" />
+        <rect x="10" y="20" width="10" height="10" fill="var(--musgo)" opacity="0.18" stroke="var(--piedra-fondo)" stroke-width="0.5" />
+        <rect x="20" y="20" width="10" height="10" fill="var(--piedra-panel-alta)" stroke="var(--piedra-fondo)" stroke-width="0.5" />
+        <rect x="30" y="20" width="10" height="10" fill="var(--piedra-panel)" stroke="var(--piedra-fondo)" stroke-width="0.5" />
+        <rect x="0" y="30" width="10" height="10" fill="var(--piedra-panel)" stroke="var(--piedra-fondo)" stroke-width="0.5" />
+        <rect x="10" y="30" width="10" height="10" fill="var(--piedra-panel-alta)" stroke="var(--piedra-fondo)" stroke-width="0.5" />
+        <rect x="20" y="30" width="10" height="10" fill="var(--piedra-panel)" stroke="var(--piedra-fondo)" stroke-width="0.5" />
+        <rect x="30" y="30" width="10" height="10" fill="var(--piedra-panel-alta)" stroke="var(--piedra-fondo)" stroke-width="0.5" />
+      </pattern>
+    </defs>`;
 
   return {
     svg: `<svg viewBox="0 0 ${anchoTotal} ${alturaTotal}" width="${anchoTotal}" height="${alturaTotal}" xmlns="http://www.w3.org/2000/svg">
+      ${patron}
+      <rect x="0" y="0" width="${anchoTotal}" height="${alturaTotal}" fill="url(#pxBlocks)" />
       <g class="mapa-caminos">${lineas}${conectoresSatelite}</g>
       <g class="mapa-nodos">${nodosPrincipales}${nodosSatelite}</g>
     </svg>`,

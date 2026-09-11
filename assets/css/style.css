@@ -274,30 +274,51 @@ a {
 }
 
 .mapa-caminos line {
-  stroke-width: 4;
   stroke-linecap: round;
+}
+.camino-base {
+  stroke: var(--piedra-fondo);
+  stroke-width: 8;
 }
 .camino-recorrido {
   stroke: var(--musgo);
+  stroke-width: 4;
 }
 .camino-siguiente {
   stroke: var(--redstone-brillo);
-  stroke-dasharray: 2 6;
+  stroke-width: 4;
+  stroke-dasharray: 1 5;
 }
 .camino-pendiente {
-  stroke: var(--linea);
-  stroke-dasharray: 2 6;
+  stroke: var(--cobre);
+  stroke-width: 3;
+  opacity: 0.55;
 }
 .camino-omitido {
   stroke: var(--hueso-tenue);
+  stroke-width: 3;
   stroke-dasharray: 1 5;
-  opacity: 0.5;
+  opacity: 0.4;
+}
+.camino-satelite-base {
+  stroke: var(--piedra-fondo);
+  stroke-width: 5;
 }
 .camino-satelite {
   stroke: var(--cobre);
   stroke-width: 2;
   stroke-dasharray: 3 4;
-  opacity: 0.7;
+  opacity: 0.8;
+}
+
+.nodo-pad {
+  fill: var(--cobre);
+  stroke: var(--piedra-fondo);
+  stroke-width: 1.5;
+  opacity: 0.9;
+}
+.nodo-mapa--bloqueada .nodo-pad {
+  opacity: 0.35;
 }
 
 .nodo-mapa-texto {
@@ -307,9 +328,6 @@ a {
 }
 .nodo-mapa--bloqueada .nodo-mapa-texto {
   fill: var(--hueso-tenue);
-}
-.nodo-mapa-icono {
-  font-size: 12px;
 }
 .nodo-mapa--disponible circle {
   filter: drop-shadow(0 0 5px var(--redstone));
