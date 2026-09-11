@@ -146,6 +146,157 @@ salidas como LEDs.
 
 ---
 
-*Las fases 3 a 5 se agregan en el mismo formato a medida que las vayamos
-cerrando en la conversación — dímelo cuando quieras que siga con la
-Fase 3.*
+## FASE 3 — SENTIDOS (misiones 20 a 30)
+
+### 20 · El laboratorio tiene fiebre
+**Elementos:** 1 sensor DHT11.
+**Paso a paso:**
+1. Conecta el pin de datos del DHT11 a un GPIO digital (anótalo: ____). Revisa si tu módulo ya trae la resistencia pull-up incorporada (la mayoría de módulos de 3 pines sí la traen); si es el sensor "pelado" de 4 pines, necesitas agregar una resistencia de 10kΩ entre datos y VCC.
+2. Instala la librería del sensor (busca "DHT sensor library" de Adafruit en el gestor de librerías del IDE).
+3. Lee y muestra la temperatura.
+
+### 21 · ¿Qué tan húmedo está?
+**Elementos:** el mismo DHT11.
+**Paso a paso:** sin cambiar el cableado, agrega la lectura de humedad del mismo sensor y muéstrala junto a la temperatura.
+
+### 22 · El sensor que ve
+**Elementos:** 1 fotoresistencia (LDR) · 1 resistencia (10kΩ recomendada).
+**Paso a paso:**
+1. Arma un divisor de voltaje: LDR en serie con la resistencia, entre 3.3V y GND.
+2. Conecta el punto medio (entre la LDR y la resistencia) a un pin analógico (anótalo: ____).
+3. Lee el valor y muéstralo mientras tapas y destapas el sensor con la mano.
+
+### 23 · La luz fantasma
+**Elementos:** la fotoresistencia de la misión 22 + 1 LED.
+**Paso a paso:** define con Juan Martín un valor umbral (probando en vivo qué número marca "oscuro"), y programa que el LED se encienda solo cuando la lectura baje de ese umbral.
+
+### 24 · El detector de obstáculos
+**Elementos:** 1 módulo de evasión de obstáculos (IR).
+**Paso a paso:**
+1. Conecta VCC, GND y el pin de salida digital a un GPIO (anótalo: ____).
+2. La mayoría de estos módulos traen un potenciómetro pequeño para ajustar la distancia de detección — muéstraselo a Juan Martín y dejen que prueben distintos ajustes.
+3. Lee el estado (HIGH/LOW) y enciende un LED cuando detecte algo cerca.
+
+### 25 · ¿Hay alguien ahí? (Ruta A)
+**Elementos:** 1 sensor PIR (HC-SR501).
+**Paso a paso:**
+1. Conecta VCC, GND y el pin de salida a un GPIO digital (anótalo: ____).
+2. Importante: el PIR necesita 30-60 segundos de calibración inicial después de energizarse — si marca detección todo el tiempo al principio, es normal, espera un minuto.
+3. Tiene dos potenciómetros pequeños (sensibilidad y tiempo de retardo) — pueden experimentar juntos con ambos.
+
+### 26 · El oído electrónico (Ruta B)
+**Elementos:** el buzzer ya desbloqueado (pasivo o activo).
+**Paso a paso:** no hay cableado nuevo. El reto es de diseño: junto con Juan Martín, inventen un patrón de pitidos (cantidad, duración, pausas) que sea reconocible como "alerta del laboratorio".
+
+### 27 · La pantalla secreta
+**Elementos:** 1 pantalla OLED 0.96" (I2C).
+**Paso a paso:**
+1. Conecta SDA y SCL a los pines I2C del ESP32 (en la mayoría de placas DevKit son GPIO 21 y GPIO 22, pero confírmalo contra tu placa) además de VCC y GND.
+2. Instala una librería compatible (Adafruit_SSD1306 + Adafruit_GFX, o U8g2).
+3. La dirección I2C más común en estos módulos es `0x3C` — si no detecta la pantalla, prueba con `0x3D` o corre un "I2C scanner" para confirmarla.
+4. Muestra un mensaje de texto simple como primera prueba.
+
+### 28 · El laboratorio habla
+**Elementos:** el sensor de la ruta elegida (25 o 26) + la pantalla OLED de la misión 27.
+**Paso a paso:** combina ambos circuitos (ya probados por separado) para que, al detectar algo, la pantalla muestre un mensaje en vez de (o además de) encender un LED.
+
+### 29 · El mapa de sensores (Bonus)
+**Elementos:** todos los sensores desbloqueados hasta ahora (DHT11, LDR, IR, y el de la ruta elegida).
+**Paso a paso:** muéstralos todos conectados a la vez y lee sus valores juntos en el monitor serie — es más una demostración que una construcción nueva.
+
+### 30 · El código secreto del sensor (Bonus)
+**Elementos:** ninguno nuevo — se desbloquea al usar el sistema de canjes por primera vez, no por armar un circuito.
+
+---
+
+## FASE 4 — INGENIERO DE REDSTONE (misiones 31 a 40)
+
+### 31 · El guardián de temperatura
+**Elementos:** el DHT11 + una salida (LED, buzzer u OLED, lo que ya tengan armado).
+**Paso a paso:** define con Juan Martín un valor límite de temperatura, y programa un `if` que active la salida solo cuando se supere.
+
+### 32 · La máquina de decisiones
+**Elementos:** el mismo sensor + salidas.
+**Paso a paso:** convierte el `if` simple en `if / else if / else`, con al menos 3 rangos distintos (ej. frío / normal / caliente), cada uno con su propia reacción.
+
+### 33 · Si pasa esto...
+**Elementos:** dos sensores distintos ya desbloqueados (ej. fotoresistencia + PIR) + una salida.
+**Paso a paso:** combina ambas lecturas con un operador lógico (`&&` para "ambas", `||` para "cualquiera") y que la salida solo reaccione según esa combinación.
+
+### 34 · La puerta secreta 2.0 (Ruta A)
+**Elementos:** sensor de presencia (PIR o IR, el que prefieran) + salida a elección.
+**Paso a paso:** diseño libre — Juan Martín elige la combinación, tú solo verificas que el cableado sea correcto antes de energizar.
+
+### 35 · Alarma de intrusos (Ruta B)
+**Elementos:** sensor de presencia + LED + buzzer.
+**Paso a paso:** combina los tres en una sola reacción activada por el sensor — luz y sonido a la vez.
+
+### 36 · El detector de luz
+**Elementos:** fotoresistencia + salidas.
+**Paso a paso:** divide el rango de lectura de luz en 3 zonas (oscuro / penumbra / luz plena) con `if/else if/else`, cada una con una reacción distinta.
+
+### 37 · El motor cobra vida ⚠️
+**Elementos:** módulo relé · motor + hélice · fuente de alimentación apropiada para el motor (revisa el voltaje que necesita tu motor específico — normalmente NO es el mismo que el del ESP32).
+**Notas de seguridad (léelas antes de armar):**
+- El motor **nunca** se conecta directo a un pin GPIO — siempre a través del relé.
+- Prueba primero el relé solo (sin el motor conectado) para confirmar que hace clic cuando el código lo activa.
+- Confirma el voltaje y la corriente que necesita tu motor antes de energizarlo — no asumas que es igual al del ESP32.
+- Supervisa siempre que la hélice esté libre de cables sueltos, dedos y bloques magnéticos antes de energizar.
+**Paso a paso:**
+1. Conecta el pin de señal del relé a un GPIO (anótalo: ____).
+2. Conecta el motor al lado de carga del relé, con su propia fuente de alimentación apropiada.
+3. Prueba encender/apagar el motor desde el código, con Juan Martín observando desde una distancia segura la primera vez.
+
+### 38 · La máquina automática
+**Elementos:** un sensor a elección + el motor (vía relé).
+**Paso a paso:** conecta el sensor elegido para que, al detectar algo, active el motor por un tiempo determinado y luego lo apague solo.
+
+### 39 · El circuito misterioso
+**Elementos:** cualquier circuito ya armado.
+**Paso a paso:** antes de la sesión, cambia intencionalmente algo pequeño (un cable a un pin distinto, una línea de código comentada, una polaridad invertida) y deja que Juan Martín lo diagnostique por su cuenta. Ten preparado el circuito "correcto" aparte, por si se frustra y necesita comparar.
+
+### 40 · La fábrica de piezas (Bonus)
+**Elementos:** ninguno nuevo — se desbloquea automáticamente al completar la misión 37 (el motor).
+
+---
+
+## FASE 5 — INVENTOR (misiones 41 a 47)
+
+### 41 · El reto de los tres componentes
+**Elementos:** 3 componentes elegidos entre los ya desbloqueados.
+**Paso a paso:** elige tú (o sortéenlos) tres componentes al azar y deja que Juan Martín decida cómo combinarlos. No hay instrucciones de cableado fijas — tu rol es solo de seguridad (revisar polaridades y voltajes antes de energizar).
+
+### 42 · La máquina de reacción
+**Elementos:** 1 LED · 1 botón.
+**Paso a paso:** programa que se encienda el LED en un momento aleatorio, y mide con `millis()` el tiempo hasta que se presiona el botón. Muestra el resultado en el monitor serie o en la OLED si ya la tienen conectada.
+
+### 43 · El desafío de los sensores
+**Elementos:** 2 sensores a elección.
+**Paso a paso:** diseño libre, igual que la 41 pero con sensores. Deja que Juan Martín proponga la idea completa antes de tocar el cableado.
+
+### 44 · La máquina inútil (Bonus)
+**Elementos:** ninguno nuevo.
+**Paso a paso:** reto puramente creativo — construir algo que "no sirva para nada" a propósito (un clásico de ingeniería para practicar sin presión). No necesita preparación técnica de tu parte.
+
+### 45 · El invento imposible (Secreta)
+**Elementos:** cualquier componente del kit, sin restricciones.
+**Paso a paso:** esta es abierta a propósito — no le des instrucciones, solo la pregunta del final del archivo de misiones ("¿qué inventarías si nadie te dijera que es imposible?"). Tu rol es solo de seguridad.
+
+### 46 · El gran proyecto (Final)
+**Elementos:** todo el kit + los bloques magnéticos.
+**Paso a paso:**
+1. Antes de tocar nada, pídele a Juan Martín que dibuje o describa su idea completa (qué entrada, qué sensor, qué salida, qué decisión).
+2. Revisa la idea con él: ¿es segura? ¿usa componentes que ya conoce?
+3. Déjalo construir con la menor intervención posible — este es el momento de ver cuánto aprendió, no de enseñar algo nuevo.
+4. Prueba de seguridad final tuya antes de la primera energización completa.
+
+### 47 · El laboratorio es tuyo (Final secreto)
+**Elementos:** modo creativo — ya no hay reglas de cableado, solo supervisión de seguridad general.
+**Paso a paso:** ninguno — es la recompensa por terminar. Disfruten juntos el "modo libre" con todos los bloques y el kit completo desbloqueado.
+
+---
+
+Con esto quedan las 47 misiones completas: historia + paso a paso técnico.
+Los cambios menores que se necesiten (ajustar un tiempo, cambiar un pin,
+afinar una historia) se hacen directo sobre estos mismos archivos cuando
+haga falta.
